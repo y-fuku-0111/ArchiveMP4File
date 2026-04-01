@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy -NoProfile -ExecutionPolicy Bypass -File "\\TINASHA\works\Scripts\PowerShell\DragAndDropFilePicker.ps1  -FilePath //TINASHA/works/DTV_mp4 -ArchivePath //ELAINA/share/DTV_mp4 -RenameOnly $true"

@@ -1,0 +1,1 @@
+powershell -NoProfile -ExecutionPolicy Bypass \\tinasha\works\Scripts\PowerShell\ArchiveMP4File\ArchiveMP4File.ps1 -FilePath //tinasha/works/DTV_mp4 -ArchivePath //elaina/share/DTV_mp4 -RenameOnly $false
