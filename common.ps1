@@ -137,6 +137,7 @@ function Convert-FileName {
         [ordered]@{ org = "【イマニメーション W】" ; rep = "" },
         [ordered]@{ org = "BS11ガンダムアワー " ; rep = "" },   
         [ordered]@{ org = "日曜アニメ劇場" ; rep = "" },
+        [ordered]@{ org = "火アニバル " ; rep = "" },
         [ordered]@{ org = "水曜アニメ・水もん " ; rep = "" },
         [ordered]@{ org = "＜アニメギルド＞・" ; rep = "" },
         [ordered]@{ org = "＜アニメギルド＞" ; rep = "" },

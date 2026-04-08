@@ -2,14 +2,15 @@
 # ファイルをリネームしてアーカイブディレクトリに移動するスクリプト
 # 引数
 param(
-    [string]$FilePath,              # 処理対象となるファイルのパス（省略可、デフォルトは "\\TINASHA\share\DTV_mp4"）
-    [string]$ArchivePath,           # 格納対象となるディレクトリのパス（省略可、デフォルトは "\\ELAINA\share\DTV_mp4"）
-    [System.Boolean]$RenameOnly     # リネームのみ実行するかどうかのフラグ（省略可、デフォルトは $false）
+    [string]$FilePath,                      # 処理対象となるファイルのパス（省略可、デフォルトは "\\TINASHA\share\DTV_mp4"）
+    [string]$ArchivePath,                   # 格納対象となるディレクトリのパス（省略可、デフォルトは "\\ELAINA\share\DTV_mp4"）
+    [System.Boolean]$RenameOnly = $false,   # リネームのみ実行するかどうかのフラグ（省略可、デフォルトは $false）
+    [System.Boolean]$ExecConfirm = $true    # 実行確認を行うかどうかのフラグ（省略可、デフォルトは $true）
 )
 
 # 共通処理インポート
 # . \\TINASHA\works\Scripts\PowerShell\common.ps1
-. .\common.ps1
+. \\tinasha\works\Scripts\PowerShell\ArchiveMP4File\common.ps1
 
 # 処理対象となるファイルのパスを指定
 # $search_file_path = "\\TINASHA\works\DTV_mp4"
@@ -32,6 +33,13 @@ if ($RenameOnly) {
     $renameOnlyFlg = $true
 }
 
+# 実行確認する
+  $execConfirmFlg = $false
+# $renameOnlyFlg = $true
+if ($ExecConfirm) {
+    $execConfirmFlg = $true
+}
+
 Write-Host ("")
 Write-Host ("処理対象となるファイルパス：" + $search_file_path)
 Write-Host ("格納対象となるディレクトリ：" + $search_dir_path)
@@ -41,20 +49,22 @@ if ($renameOnlyFlg) {
     Write-Host "リネームしてファイルを移動します。"
 }
 
-$confirmationTitle = "確認"
-$confirmationMessage = "処理を継続しますか?"
-$confirmationYes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "処理を実行します"
-$confirmationNo = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "処理をキャンセルします"
-$confirmationOptions = [System.Management.Automation.Host.ChoiceDescription[]]($confirmationYes, $confirmationNo)
-$confirmationResult = $host.ui.PromptForChoice($confirmationTitle, $confirmationMessage, $confirmationOptions, 0)
-if ($confirmationResult -eq 0) {
-    Write-Host "処理を継続します。"
-} else {
-    Write-Host "処理をキャンセルします。"
-    Read-Host "Press Enter to continue..."
-    exit 0
-}
+if ($execConfirmFlg) {
+    $confirmationTitle = "確認"
+    $confirmationMessage = "処理を継続しますか?"
+    $confirmationYes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "処理を実行します"
+    $confirmationNo = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "処理をキャンセルします"
+    $confirmationOptions = [System.Management.Automation.Host.ChoiceDescription[]]($confirmationYes, $confirmationNo)
+    $confirmationResult = $host.ui.PromptForChoice($confirmationTitle, $confirmationMessage, $confirmationOptions, 0)
+    if ($confirmationResult -eq 0) {
+        Write-Host "処理を継続します。"
+    } else {
+        Write-Host "処理をキャンセルします。"
+        Read-Host "Press Enter to continue..."
+        exit 0
+    }
 
+}
 # 変数宣言  
 $files = @()    # ハッシュテーブルの配列
 $file = @{}     # 単一のハッシュテーブル
