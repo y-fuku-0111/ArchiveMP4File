@@ -86,7 +86,9 @@ foreach ($childItem in $childItems) {
 # 対象ファイルがない場合は処理終了
 if ($files.Count -eq 0) {
     Write-Host ($search_file_path + " に対象ファイル(.mp4)が見つかりませんでした。処理を終了します。")
-    Read-Host "Press Enter to continue..."
+    if ($execConfirmFlg) {
+        Read-Host "Press Enter to continue..."
+    }
     exit 0
 }
 
@@ -172,5 +174,7 @@ foreach ($sortedFile in $sortedFiles) {
     Write-Host ($msg)
 }
 Write-Host "ファイルのリネームとアーカイブが完了しました。処理を終了します。"
-Read-Host "Press Enter to continue..."
+if ($execConfirmFlg) {
+    Read-Host "Press Enter to continue..."
+}
 exit 0
