@@ -11,7 +11,7 @@
             "type": "PowerShell",
             "request": "launch",
             "script": "${file}",
-            "args": ["-FilePath" , "//TINASHA/works/DTV_mp4" , "-ArchivePath" , "//ELAINA/share/DTV_mp4", "-RenameOnly" , "$true"]
+            "args": ["-FilePath" , "//TINASHA/works/DTV_mp4" , "-ArchivePath" , "//ELAINA/share/DTV_mp4", "-RenameOnly" , "$true", "-ExecConfirm" , "$true"],
         }
     ]
 }
