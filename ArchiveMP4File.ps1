@@ -8,9 +8,17 @@ param(
     [System.Boolean]$ExecConfirm = $true    # 実行確認を行うかどうかのフラグ（省略可、デフォルトは $true）
 )
 
-# 共通処理インポート
+# 共通化コードの読み込み
 # . \\TINASHA\works\Scripts\PowerShell\common.ps1
-. \\tinasha\works\Scripts\PowerShell\ArchiveMP4File\common.ps1
+# . \\tinasha\works\Scripts\PowerShell\ArchiveMP4File\common.ps1
+
+# フォルダー構成を取得
+[System.String]$current_path=Split-Path ( & { $MyInvocation.ScriptName } ) -parent
+
+# 共通化コードの読み込み
+[System.String]$common_code_path = Join-Path -Path $current_path -ChildPath "common.ps1"
+. "$common_code_path"
+#. "$($current_path)\common.ps1"
 
 # 処理対象となるファイルのパスを指定
 # $search_file_path = "\\TINASHA\works\DTV_mp4"
@@ -41,6 +49,7 @@ if ($ExecConfirm) {
 }
 
 Write-Host ("")
+Write-Host ("スクリプト実行パス：" + $current_path)
 Write-Host ("処理対象となるファイルパス：" + $search_file_path)
 Write-Host ("格納対象となるディレクトリ：" + $search_dir_path)
 if ($renameOnlyFlg) {
@@ -55,6 +64,7 @@ if ($execConfirmFlg) {
     $confirmationYes = New-Object System.Management.Automation.Host.ChoiceDescription "&Yes", "処理を実行します"
     $confirmationNo = New-Object System.Management.Automation.Host.ChoiceDescription "&No", "処理をキャンセルします"
     $confirmationOptions = [System.Management.Automation.Host.ChoiceDescription[]]($confirmationYes, $confirmationNo)
+    
     $confirmationResult = $host.ui.PromptForChoice($confirmationTitle, $confirmationMessage, $confirmationOptions, 0)
     if ($confirmationResult -eq 0) {
         Write-Host "処理を継続します。"
